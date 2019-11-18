@@ -53,3 +53,49 @@ JNIEXPORT void JNICALL Java_com_canter_ndkdemo3_JNIMethod_callStaticMethod__I
     env->DeleteLocalRef(jstring1);
 }
 
+
+
+JNIEXPORT void JNICALL Java_com_canter_ndkdemo3_JNIMethod_callInstanceMethod__I
+        (JNIEnv *env, jobject jobject1, jint jint1) {
+    jclass clas_JNIMethod = env->FindClass("com/canter/ndkdemo3/JNIMethod");
+    if (clas_JNIMethod == NULL) {
+        return;
+    }
+
+    //找到对应的构造方法
+    jmethodID  construct_Method = env->GetMethodID(clas_JNIMethod, "<init>", "()V");
+
+    if (construct_Method == NULL) {
+        return;
+    }
+
+    //创建对象
+    jobject jniMethodObj = env->NewObject(clas_JNIMethod, construct_Method, NULL);
+
+    if (jniMethodObj == NULL) {
+        return;
+    }
+
+    //找到对应的实例
+    jfieldID  jfieldID1 = env->GetFieldID(clas_JNIMethod, "address", "Ljava/lang/String;");
+    if (jfieldID1 == NULL) {
+        return;
+    }
+
+    jstring addressData = env->NewStringUTF("native call guangxi");
+    //修改对应的实例
+    env->SetObjectField(jniMethodObj, jfieldID1, addressData);
+
+    //找到对应的实例方法方法
+    jmethodID jmethodID1 = env->GetMethodID(clas_JNIMethod, "logAddress", "(Ljava/lang/String;)V");
+    if (jmethodID1 == NULL) {
+        return;
+    }
+    jstring address = env->NewStringUTF("call instance method");
+    //调用对应的实例方法
+    env->CallVoidMethod(jniMethodObj, jmethodID1, address);
+
+    env->DeleteLocalRef(address);
+    env->DeleteLocalRef(addressData);
+
+}

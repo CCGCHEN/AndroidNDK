@@ -27,4 +27,12 @@ public class JNIMethod {
     public static void staticMethod(String data) {
         logMessage(data);
     }
+
+
+    public String address = "guangdong";
+
+    public void logAddress(String data) {
+        logMessage(address);
+        logMessage(data);
+    }
 }

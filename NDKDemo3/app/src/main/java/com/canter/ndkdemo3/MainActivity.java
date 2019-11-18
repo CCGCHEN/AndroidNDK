@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
         JNIMethod.callStaticMethod(100);
 
+        new JNIMethod().callInstanceMethod(200);
+
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
